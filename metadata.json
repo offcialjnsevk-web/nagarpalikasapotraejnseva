@@ -1,0 +1,6 @@
+{
+  "name": "Nagar Palika Sapotra – e-Jan Seva Portal",
+  "description": "Integrated Digital Municipal Complaint and Public Demand Management Portal for Nagar Palika Sapotra, Rajasthan.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

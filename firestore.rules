@@ -1,0 +1,125 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net: Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'offcialjnsevk@gmail.com' ||
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['super_admin', 'executive_officer', 'department_head']
+      );
+    }
+
+    function isEmployee() {
+      return isSignedIn() && (
+        isAdmin() ||
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['junior_engineer', 'sanitation_inspector', 'field_employee', 'data_entry']
+      );
+    }
+
+    // Departments: Public Read, Admin Write
+    match /departments/{departmentId} {
+      allow read: if isValidId(departmentId);
+      allow write: if isAdmin() && isValidId(departmentId);
+    }
+
+    // Wards: Public Read, Admin Write
+    match /wards/{wardId} {
+      allow read: if isValidId(wardId);
+      allow write: if isAdmin() && isValidId(wardId);
+    }
+
+    // Development Projects: Public Read, Admin / Engineer Write
+    match /developmentProjects/{projectId} {
+      allow read: if isValidId(projectId);
+      allow write: if (isAdmin() || isEmployee()) && isValidId(projectId);
+    }
+
+    // Public Notices: Public Read, Admin Write
+    match /publicNotices/{noticeId} {
+      allow read: if isValidId(noticeId);
+      allow write: if isAdmin() && isValidId(noticeId);
+    }
+
+    // System Settings (CMS, Contact, Helplines): Public Read, Admin Write
+    match /systemSettings/{settingId} {
+      allow read: if isValidId(settingId);
+      allow write: if isAdmin() && isValidId(settingId);
+    }
+
+    // Public Demands: Citizens can read, submit, and support
+    match /publicDemands/{demandId} {
+      allow read: if isValidId(demandId);
+      allow create: if isValidId(demandId) &&
+        incoming().applicantName is string && incoming().applicantName.size() <= 100 &&
+        incoming().applicantPhone is string && incoming().applicantPhone.size() <= 20 &&
+        incoming().title is string && incoming().title.size() <= 200 &&
+        incoming().description is string && incoming().description.size() <= 3000;
+      allow update: if isValidId(demandId) && (
+        isAdmin() ||
+        isEmployee() ||
+        // Citizen adding support/upvote to demand
+        incoming().diff(existing()).affectedKeys().hasOnly(['supportCount', 'supportedPhones', 'updatedAt'])
+      );
+      allow delete: if isAdmin() && isValidId(demandId);
+    }
+
+    // Complaints: Citizen submission, public tracking, employee resolution, admin management
+    match /complaints/{complaintId} {
+      allow read: if isValidId(complaintId);
+      allow create: if isValidId(complaintId) &&
+        incoming().citizenName is string && incoming().citizenName.size() <= 100 &&
+        incoming().citizenPhone is string && incoming().citizenPhone.size() <= 20 &&
+        incoming().subject is string && incoming().subject.size() <= 200 &&
+        incoming().description is string && incoming().description.size() <= 3000;
+      allow update: if isValidId(complaintId) && (
+        isAdmin() ||
+        isEmployee() ||
+        // Citizen feedback or reopening
+        incoming().diff(existing()).affectedKeys().hasOnly(['citizenFeedback', 'citizenRating', 'status', 'reopenReason', 'updatedAt'])
+      );
+      allow delete: if isAdmin() && isValidId(complaintId);
+    }
+
+    // Employees: Admin can manage, authenticated employees can read
+    match /employees/{employeeId} {
+      allow read: if isValidId(employeeId);
+      allow write: if isAdmin() && isValidId(employeeId);
+    }
+
+    // Notification Logs: Read by admin, writable by system/admin or upon lodging complaint
+    match /notificationLogs/{logId} {
+      allow read: if isValidId(logId);
+      allow create: if isValidId(logId);
+      allow update, delete: if isAdmin() && isValidId(logId);
+    }
+
+    // User Profiles
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow write: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+    }
+  }
+}

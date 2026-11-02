@@ -1,0 +1,249 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role-based access information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "phoneNumber": { "type": "string", "maxLength": 20 },
+        "role": { "type": "string", "enum": ["super_admin", "executive_officer", "department_head", "junior_engineer", "sanitation_inspector", "field_employee", "data_entry", "citizen"] },
+        "departmentId": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Complaint": {
+      "title": "Complaint",
+      "description": "Citizen municipal complaint record",
+      "type": "object",
+      "properties": {
+        "complaintNumber": { "type": "string", "maxLength": 30 },
+        "citizenName": { "type": "string", "maxLength": 100 },
+        "citizenPhone": { "type": "string", "maxLength": 15 },
+        "citizenEmail": { "type": "string", "maxLength": 100 },
+        "wardNumber": { "type": "string", "maxLength": 10 },
+        "address": { "type": "string", "maxLength": 300 },
+        "departmentId": { "type": "string", "maxLength": 50 },
+        "departmentName": { "type": "string", "maxLength": 100 },
+        "category": { "type": "string", "maxLength": 100 },
+        "subject": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "priority": { "type": "string", "enum": ["LOW", "NORMAL", "URGENT"] },
+        "status": { "type": "string", "enum": ["SUBMITTED", "PENDING", "ASSIGNED", "IN_PROGRESS", "UNDER_VERIFICATION", "RESOLVED", "REOPENED", "REJECTED"] },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "accuracy": { "type": "number" },
+        "photos": { "type": "array" },
+        "assignedEmployeeId": { "type": "string" },
+        "assignedEmployeeName": { "type": "string" },
+        "beforePhoto": { "type": "string" },
+        "afterPhoto": { "type": "string" },
+        "resolutionRemarks": { "type": "string", "maxLength": 1000 },
+        "reopenReason": { "type": "string", "maxLength": 1000 },
+        "citizenFeedback": { "type": "string" },
+        "citizenRating": { "type": "number" },
+        "expectedResolutionDate": { "type": "string" },
+        "resolvedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["citizenName", "citizenPhone", "wardNumber", "departmentId", "subject", "description", "status"]
+    },
+    "PublicDemand": {
+      "title": "PublicDemand",
+      "description": "Public community development demand submitted by citizens",
+      "type": "object",
+      "properties": {
+        "demandNumber": { "type": "string", "maxLength": 30 },
+        "applicantName": { "type": "string", "maxLength": 100 },
+        "applicantPhone": { "type": "string", "maxLength": 15 },
+        "wardNumber": { "type": "string", "maxLength": 10 },
+        "title": { "type": "string", "maxLength": 200 },
+        "category": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "photos": { "type": "array" },
+        "beneficiaryCount": { "type": "number" },
+        "publicRemarks": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["SUBMITTED", "UNDER_REVIEW", "SITE_INSPECTION", "FEASIBILITY_ASSESSMENT", "APPROVED", "REJECTED", "BUDGET_PENDING", "WORK_SANCTIONED", "WORK_IN_PROGRESS", "COMPLETED"] },
+        "supportCount": { "type": "number" },
+        "supportedPhones": { "type": "array" },
+        "adminRemarks": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["applicantName", "applicantPhone", "wardNumber", "title", "category", "description", "status"]
+    },
+    "Department": {
+      "title": "Department",
+      "description": "Municipal department configuration",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "nameHi": { "type": "string", "maxLength": 100 },
+        "headName": { "type": "string", "maxLength": 100 },
+        "contactPhone": { "type": "string", "maxLength": 20 },
+        "whatsappNumber": { "type": "string", "maxLength": 20 },
+        "email": { "type": "string", "maxLength": 100 },
+        "slaDays": { "type": "number" },
+        "icon": { "type": "string", "maxLength": 50 },
+        "categories": { "type": "array" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "nameHi", "contactPhone"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "Municipal staff member or field worker",
+      "type": "object",
+      "properties": {
+        "employeeCode": { "type": "string", "maxLength": 30 },
+        "fullName": { "type": "string", "maxLength": 100 },
+        "designation": { "type": "string", "maxLength": 100 },
+        "departmentId": { "type": "string", "maxLength": 50 },
+        "departmentName": { "type": "string", "maxLength": 100 },
+        "mobileNumber": { "type": "string", "maxLength": 20 },
+        "whatsappNumber": { "type": "string", "maxLength": 20 },
+        "email": { "type": "string", "maxLength": 100 },
+        "assignedWard": { "type": "string", "maxLength": 20 },
+        "status": { "type": "string", "enum": ["ACTIVE", "ON_LEAVE", "INACTIVE"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["fullName", "designation", "departmentId", "mobileNumber", "status"]
+    },
+    "Ward": {
+      "title": "Ward",
+      "description": "Municipal ward geographical unit",
+      "type": "object",
+      "properties": {
+        "wardNumber": { "type": "string", "maxLength": 10 },
+        "wardName": { "type": "string", "maxLength": 100 },
+        "wardNameHi": { "type": "string", "maxLength": 100 },
+        "councilorName": { "type": "string", "maxLength": 100 },
+        "councilorPhone": { "type": "string", "maxLength": 20 },
+        "population": { "type": "number" },
+        "areaDescription": { "type": "string", "maxLength": 500 },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" }
+      },
+      "required": ["wardNumber", "wardName"]
+    },
+    "DevelopmentProject": {
+      "title": "DevelopmentProject",
+      "description": "Municipal infrastructure and civic work project",
+      "type": "object",
+      "properties": {
+        "projectCode": { "type": "string", "maxLength": 30 },
+        "title": { "type": "string", "maxLength": 200 },
+        "titleHi": { "type": "string", "maxLength": 200 },
+        "wardNumber": { "type": "string", "maxLength": 10 },
+        "departmentId": { "type": "string", "maxLength": 50 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "approvedBudget": { "type": "number" },
+        "sanctionDate": { "type": "string" },
+        "startDate": { "type": "string" },
+        "targetCompletionDate": { "type": "string" },
+        "contractorAgency": { "type": "string", "maxLength": 100 },
+        "progressPercent": { "type": "number" },
+        "status": { "type": "string", "enum": ["PROPOSED", "UNDER_REVIEW", "APPROVED", "TENDER_STAGE", "WORK_STARTED", "IN_PROGRESS", "COMPLETED", "ON_HOLD"] },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "images": { "type": "array" }
+      },
+      "required": ["title", "wardNumber", "approvedBudget", "status"]
+    },
+    "PublicNotice": {
+      "title": "PublicNotice",
+      "description": "Public notice, government order or announcement",
+      "type": "object",
+      "properties": {
+        "noticeNumber": { "type": "string", "maxLength": 50 },
+        "title": { "type": "string", "maxLength": 200 },
+        "titleHi": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "category": { "type": "string", "enum": ["NOTICE", "ORDER", "TENDER", "EVENT", "PRESS_RELEASE"] },
+        "publishDate": { "type": "string" },
+        "expiryDate": { "type": "string" },
+        "pdfUrl": { "type": "string" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["title", "category", "publishDate"]
+    },
+    "NotificationLog": {
+      "title": "NotificationLog",
+      "description": "WhatsApp, SMS, or Email delivery audit log",
+      "type": "object",
+      "properties": {
+        "channel": { "type": "string", "enum": ["WHATSAPP", "SMS", "EMAIL"] },
+        "recipientPhone": { "type": "string" },
+        "recipientName": { "type": "string" },
+        "event": { "type": "string" },
+        "referenceId": { "type": "string" },
+        "content": { "type": "string", "maxLength": 2000 },
+        "status": { "type": "string", "enum": ["DELIVERED", "SENT", "DEMO_MODE", "FAILED"] },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["channel", "recipientPhone", "content", "status"]
+    },
+    "SystemSetting": {
+      "title": "SystemSetting",
+      "description": "Municipal CMS and gateway configuration",
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "value": { "type": "object" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["key"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and administrative roles"
+    },
+    "/complaints/{complaintId}": {
+      "schema": "Complaint",
+      "description": "Citizen registered complaints"
+    },
+    "/publicDemands/{demandId}": {
+      "schema": "PublicDemand",
+      "description": "Public community demands"
+    },
+    "/departments/{departmentId}": {
+      "schema": "Department",
+      "description": "Municipal departments"
+    },
+    "/employees/{employeeId}": {
+      "schema": "Employee",
+      "description": "Municipal employees"
+    },
+    "/wards/{wardId}": {
+      "schema": "Ward",
+      "description": "Municipal wards"
+    },
+    "/developmentProjects/{projectId}": {
+      "schema": "DevelopmentProject",
+      "description": "Civic development projects"
+    },
+    "/publicNotices/{noticeId}": {
+      "schema": "PublicNotice",
+      "description": "Public notices and announcements"
+    },
+    "/notificationLogs/{logId}": {
+      "schema": "NotificationLog",
+      "description": "SMS and WhatsApp notification logs"
+    },
+    "/systemSettings/{settingId}": {
+      "schema": "SystemSetting",
+      "description": "Portal CMS settings and notification configurations"
+    }
+  }
+}

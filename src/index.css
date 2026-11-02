@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary-navy: #123568;
+    --gov-blue: #174EA6;
+    --gov-saffron: #F39A25;
+    --gov-green: #16864A;
+    --gov-red: #D83C3C;
+    --gov-bg: #F4F7FC;
+  }
+
+  body {
+    background-color: var(--gov-bg);
+    color: #1e293b;
+    font-family: 'Plus Jakarta Sans', 'Mukta', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Hindi Devanagari Typography styling */
+.font-hindi {
+  font-family: 'Mukta', 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Leaflet map styles fixes */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  border-radius: 0.75rem;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Accessibility high contrast mode */
+body.high-contrast {
+  filter: contrast(125%);
+}
+
+body.high-contrast .bg-slate-50,
+body.high-contrast .bg-white {
+  background-color: #ffffff !important;
+}
+
+/* Print styling for receipts */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-receipt, #printable-receipt * {
+    visibility: visible;
+  }
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
