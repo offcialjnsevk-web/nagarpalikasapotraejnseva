@@ -23,6 +23,7 @@ import { DevelopmentWorksPage } from './pages/public/DevelopmentWorksPage';
 import { PublicNoticesPage } from './pages/public/PublicNoticesPage';
 import { ContactPage } from './pages/public/ContactPage';
 import { PrivacyTermsPage } from './pages/public/PrivacyTermsPage';
+import { WorkRegistrationPage } from './pages/public/WorkRegistrationPage';
 
 // Admin Pages
 import { AdminLayout } from './pages/admin/AdminLayout';
@@ -112,6 +113,7 @@ function AppContent() {
         {currentTab === 'notices' && <PublicNoticesPage />}
         {currentTab === 'contact' && <ContactPage />}
         {currentTab === 'privacy' && <PrivacyTermsPage />}
+        {currentTab === 'work_section' && <WorkRegistrationPage />}
       </main>
 
       <Footer setCurrentTab={handleNavigate} />

@@ -351,6 +351,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
               मांग पत्र
             </button>
             <button
+              onClick={() => handleNavClick('work_section')}
+              className={`px-3 py-2.5 rounded transition-colors font-black ${currentTab === 'work_section' ? 'bg-amber-400 text-slate-900' : 'bg-amber-500/20 hover:bg-amber-500/30 text-amber-300'}`}
+            >
+              ★ वर्क सेक्शन (रोजगार)
+            </button>
+            <button
               onClick={() => handleNavClick('development_works')}
               className={`px-3 py-2.5 rounded transition-colors ${currentTab === 'development_works' ? 'bg-white text-[#123568]' : 'hover:bg-white/10 text-white'}`}
             >
@@ -420,6 +426,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
             className="w-full text-left px-3 py-2 rounded-lg bg-amber-50 text-[#b96f0b]"
           >
             📄 मांग पत्र दर्ज करें
+          </button>
+          <button
+            onClick={() => handleNavClick('work_section')}
+            className="w-full text-left px-3 py-2 rounded-lg bg-amber-500 text-slate-900 font-black"
+          >
+            ★ वर्क सेक्शन (रोजगार एवं कार्य पंजीयन)
           </button>
           <button
             onClick={() => handleNavClick('track')}

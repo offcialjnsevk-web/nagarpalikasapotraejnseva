@@ -312,3 +312,21 @@ export interface StaffAccount {
   assignedWard: string;
   status: 'ACTIVE' | 'ON_LEAVE' | 'INACTIVE';
 }
+
+export interface WorkApplication {
+  id: string;
+  tokenNumber: string;
+  fullName: string;
+  address: string;
+  aadhaarNumber: string;
+  email: string;
+  percentage10th: number;
+  percentage12th?: number;
+  rscitDetails: string;
+  aadhaarDoc: string;
+  marksheet10thDoc: string;
+  rscitDoc?: string;
+  status: 'SUBMITTED' | 'UNDER_REVIEW' | 'APPROVED' | 'REJECTED';
+  createdAt: string;
+}
+
