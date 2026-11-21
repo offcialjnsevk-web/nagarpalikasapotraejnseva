@@ -324,6 +324,9 @@ export interface WorkApplication {
   percentage12th?: number;
   rscitDetails: string;
   aadhaarDoc: string;
+  photoDoc?: string;
+  signatureDoc?: string;
+  affidavitDoc?: string;
   marksheet10thDoc: string;
   rscitDoc?: string;
   status: 'SUBMITTED' | 'UNDER_REVIEW' | 'APPROVED' | 'REJECTED';

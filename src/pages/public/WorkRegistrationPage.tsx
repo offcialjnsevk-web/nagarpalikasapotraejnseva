@@ -19,6 +19,9 @@ export const WorkRegistrationPage: React.FC<WorkRegistrationPageProps> = () => {
     percentage12th: '',
     rscitDetails: 'RSCIT Pass (RKCL)',
     aadhaarDoc: 'aadhaar_uploaded.pdf',
+    photoDoc: 'photo_uploaded.jpg',
+    signatureDoc: 'signature_uploaded.png',
+    affidavitDoc: 'affidavit_uploaded.pdf',
     marksheet10thDoc: '10th_marksheet_uploaded.pdf',
     rscitDoc: 'rscit_cert_uploaded.pdf',
   });
@@ -79,6 +82,9 @@ export const WorkRegistrationPage: React.FC<WorkRegistrationPageProps> = () => {
         percentage12th: formData.percentage12th ? parseFloat(formData.percentage12th) : undefined,
         rscitDetails: formData.rscitDetails,
         aadhaarDoc: formData.aadhaarDoc,
+        photoDoc: formData.photoDoc,
+        signatureDoc: formData.signatureDoc,
+        affidavitDoc: formData.affidavitDoc,
         marksheet10thDoc: formData.marksheet10thDoc,
         rscitDoc: formData.rscitDoc,
         status: 'UNDER_REVIEW',
@@ -122,7 +128,7 @@ export const WorkRegistrationPage: React.FC<WorkRegistrationPageProps> = () => {
           </div>
         </div>
         <p className="text-slate-200 text-sm md:text-base leading-relaxed">
-          municipal projects, skilled deployment, and verification portal. 10वीं कक्षा एवं आधार सत्यापन के साथ अपना आवेदन जमा करें।
+          municipal projects, skilled deployment, and verification portal. 10वीं कक्षा, आधार, फोटो, हस्ताक्षर एवं शपथ पत्र अपलोड के साथ आवेदन जमा करें।
         </p>
       </div>
 
@@ -181,6 +187,9 @@ export const WorkRegistrationPage: React.FC<WorkRegistrationPageProps> = () => {
                   percentage12th: '',
                   rscitDetails: 'RSCIT Pass (RKCL)',
                   aadhaarDoc: 'aadhaar_uploaded.pdf',
+                  photoDoc: 'photo_uploaded.jpg',
+                  signatureDoc: 'signature_uploaded.png',
+                  affidavitDoc: 'affidavit_uploaded.pdf',
                   marksheet10thDoc: '10th_marksheet_uploaded.pdf',
                   rscitDoc: 'rscit_cert_uploaded.pdf',
                 });
@@ -339,6 +348,45 @@ export const WorkRegistrationPage: React.FC<WorkRegistrationPageProps> = () => {
                   type="file"
                   accept="image/*,application/pdf"
                   onChange={(e) => handleFileChange(e, 'aadhaarDoc')}
+                  className="text-xs text-slate-500 w-full file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+                />
+              </div>
+
+              {/* Photo Upload */}
+              <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-4 text-center hover:bg-slate-100 transition-all">
+                <Upload className="w-6 h-6 text-slate-500 mx-auto mb-2" />
+                <span className="block text-xs font-bold text-slate-700 mb-1">फोटो अपलोड (Photo) <span className="text-red-500">*</span></span>
+                <span className="text-[10px] text-emerald-600 font-bold block mb-2">{formData.photoDoc}</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileChange(e, 'photoDoc')}
+                  className="text-xs text-slate-500 w-full file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+                />
+              </div>
+
+              {/* Signature Upload */}
+              <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-4 text-center hover:bg-slate-100 transition-all">
+                <Upload className="w-6 h-6 text-slate-500 mx-auto mb-2" />
+                <span className="block text-xs font-bold text-slate-700 mb-1">साइन अपलोड (Signature) <span className="text-red-500">*</span></span>
+                <span className="text-[10px] text-emerald-600 font-bold block mb-2">{formData.signatureDoc}</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileChange(e, 'signatureDoc')}
+                  className="text-xs text-slate-500 w-full file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+                />
+              </div>
+
+              {/* Affidavit Upload */}
+              <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-4 text-center hover:bg-slate-100 transition-all">
+                <Upload className="w-6 h-6 text-slate-500 mx-auto mb-2" />
+                <span className="block text-xs font-bold text-slate-700 mb-1">शपथ पत्र अपलोड (Affidavit)</span>
+                <span className="text-[10px] text-emerald-600 font-bold block mb-2">{formData.affidavitDoc}</span>
+                <input
+                  type="file"
+                  accept="image/*,application/pdf"
+                  onChange={(e) => handleFileChange(e, 'affidavitDoc')}
                   className="text-xs text-slate-500 w-full file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
                 />
               </div>
